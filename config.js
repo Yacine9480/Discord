@@ -1,6 +1,7 @@
 module.exports = {      
     
-    token: "MTE1MTc5OTY2MTE0NTkwMzEzNA.GKf3I3.qixOkia5rXG5-QFABCBEVM2_IVMzD7tdPjt78o"
+    token: "MTE1MTc5OTY2MTE0NTkwMzEzNA.GamOHH.PL0tvdMDkSLNYdZLLcy2Zim2_dvDnwFYWI_1Xs"
+    
 }
 
 

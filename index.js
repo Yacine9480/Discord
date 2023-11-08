@@ -18,14 +18,10 @@ for (const folder of commandFolders) {
 		if ('data' in command && 'execute' in command) {
 			client.commands.set(command.data.name, command);
 		} else {
-			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+			console.log(`[!!] la commande ${filePath} manque sois "data" ou "execute".`);
 		}
 	}
 }
-
-client.once(Events.ClientReady, () => {
-	console.log('Ready!');
-});
 
 client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isChatInputCommand()) return;
@@ -46,4 +42,10 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 });
 
+
 client.login(token);
+
+
+client.on('ready', () => {
+	console.log(`Logged in as ${client.user.tag}!`);
+});

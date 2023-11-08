@@ -1,0 +1,46 @@
+const {SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, } = require('discord.js');
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('unmute')
+        .setDescription('Unmute un membre')
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles)
+        .addUserOption(option =>
+            option
+                .setName('utilisateur')
+                .setDescription('Membre à mute')
+                .setRequired(true))
+    ,
+
+    async execute(interaction) {
+
+        user = interaction.options.getUser('utilisateur');
+
+        const successEmbed = new EmbedBuilder()
+            .setTitle('Succès')
+            .setDescription(`:white_check_mark: ${user} a été unmute avec succès.`)
+            .setColor('#00FF00')
+            .setTimestamp();
+
+        const errorEmbed = new EmbedBuilder()
+            .setTitle('Erreur')
+            .setDescription(`:x: ${user} n'a pas été unmute.`)
+            .setColor('#FF0000')
+            .setTimestamp();
+
+
+        try {
+
+            member = interaction.guild.members.cache.get(user.id);
+            member.roles.add('XXX');
+            member.roles.remove('XXX');
+
+            await interaction.reply({ embeds: [successEmbed], ephemeral: true });
+
+        } catch (err) {
+            console.log(err);
+            return interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+        }
+
+    }
+};

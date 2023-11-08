@@ -1,0 +1,134 @@
+// const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, } = require('discord.js');
+// const ms = require('ms');
+
+// module.exports = {
+//     data: new SlashCommandBuilder()
+//         .setName('mute')
+//         .setDescription('Mute un membre')
+//         .setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles)
+//         .addUserOption(option =>
+//             option
+//                 .setName('utilisateur')
+//                 .setDescription('Membre à mute')
+//                 .setRequired(true))
+//         .addStringOption(option =>
+//             option
+//                 .setName('durée')
+//                 .setDescription('Durée du mute (ex: 1s, 30m, 2h)')
+//                 .setRequired(true))
+//         .addStringOption(option =>
+//             option
+//                 .setName('raison')
+//                 .setDescription('Raison du mute')
+//                 .setRequired(false)),
+
+//     async execute(interaction) {
+
+//         const { guild, options } = interaction
+//         const user = interaction.options.getUser('utilisateur');
+//         const member = guild.members.cache.get(user.id);
+//         const time = options.getString('durée');
+//         const convert = ms(time);
+//         const lastChar = time.charAt(time.length - 1);
+
+//         let durationInMilliseconds;
+
+
+//         const durationValue = parseInt(time);
+        
+//         if (!isNaN(durationValue)) {
+//             switch (lastChar) {
+//                 case 's':
+//                     durationInMilliseconds = durationValue * 1000; // Durée en secondes
+//                     break;
+//                 case 'm':
+//                     durationInMilliseconds = durationValue * 60 * 1000; // Durée en minutes
+//                     break;
+//                 case 'h':
+//                     durationInMilliseconds = durationValue * 60 * 60 * 1000; // Durée en heures
+//                     break;
+//                 default:
+//                     durationInMilliseconds = durationValue * 60 * 1000; // Par défaut, en minutes
+//                     break;
+//             }
+//         }
+        
+
+//         let durationAsString = formatDuration(durationInMilliseconds);
+//         const reason = options.getString('raison') || 'Aucune raison spécifiée';
+//         if (durationAsString === '') {
+//             durationAsString = '';
+//         }
+
+//         const errEmbed = new EmbedBuilder()
+//             .setTitle('Erreur')
+//             .setDescription(`:x: ${user} n'est pas mute.`)
+//             .setColor('#FF0000');
+
+//         const successEmbed = new EmbedBuilder()
+//             .setTitle('Succès')
+//             .setDescription(`:white_check_mark: ${user} a été mute .`)
+//             .setColor('#00FF00')
+//             .addFields(
+
+//                 { name: 'Durée', value: durationAsString.toString() , inline: true },
+//                 { name: 'Raison', value: reason, inline: true },
+//             )
+
+//             .setTimestamp();
+
+//         if (member.roles.highest.position >= interaction.member.roles.highest.position)
+//             return interaction.reply({ embeds: [errEmbed], ephemeral: true });
+
+
+//         if (!convert)
+//             return interaction.reply({ content: [errEmbed], ephemeral: true });
+
+
+//         try {
+
+//             if (member.voice.channel) {
+//                 await member.voice.setChannel(null);
+//             }
+//             await member.roles.add('XXX');
+
+//             await member.roles.remove('XXX');
+//             await interaction.reply({ embeds: [successEmbed] });
+//             setTimeout(async () => {
+//                 await member.roles.add('XXX');
+//             }, convert);
+
+//         } catch (err) {
+//             console.log(err);
+//         }
+
+
+//         function formatDuration(durationInMilliseconds) {
+//             if (durationInMilliseconds === 0) {
+//                 return '0s';
+//             }
+//             console.log(durationInMilliseconds);
+
+//             const seconds = Math.floor(durationInMilliseconds / 1000) % 60;
+//             const minutes = Math.floor(durationInMilliseconds / (1000 * 60)) % 60;
+//             const hours = Math.floor(durationInMilliseconds / (1000 * 60 * 60));
+
+//             let formattedDuration = '';
+//             if (hours > 0) {
+//                 formattedDuration += `${hours}h `;
+//             }
+//             if (minutes > 0) {
+//                 formattedDuration += `${minutes}m `;
+//             }
+//             if (seconds > 0) {
+//                 formattedDuration += `${seconds}s`;
+//             }
+
+//             return formattedDuration.trim();
+//         }
+
+//     }
+
+
+// }
+
